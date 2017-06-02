@@ -8,4 +8,17 @@ router.get('/', (req, res) => {
   });
 });
 
+
+router.post('/', (req,res) => {
+  let { userId, firstTodo } = req.body;
+  new TodoList ({
+    userId,
+    userTodos: [firstTodo]
+  }).save( (err, todolist) => {
+    if (err)
+      return res.json(err);
+    return res.json(todolist);
+  });
+});
+
 module.exports = router;

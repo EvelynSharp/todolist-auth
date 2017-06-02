@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUserTodos } from '../actions/todo';
+import { getUserTodos, createTodoList } from '../actions/todo';
 import {
   List,
   Icon,
   Header,
-  Grid,
   Form,
   Button,
 } from 'semantic-ui-react';
 
 class TodoList extends Component {
-  state = { newTodo: {} }
+  state = { newTodo: '' }
 
-  componentDidMount() {
+  componentDidMount = () => {
     let { _id } = this.props;
     this.props.dispatch(getUserTodos(_id));
   }
@@ -34,16 +33,37 @@ class TodoList extends Component {
     })
   }
 
+  handleTodoChange = (e) => {
+    let { id, value } = e.target;
+    this.setState({ [id]: value });
+  }
+
+  handleTodoSubmit = (e) => {
+    e.preventDefault();
+    let firstTodo = this.state.newTodo;
+    let userId = this.props._id;
+    if (!this.props.todolist[0]){
+      this.props.dispatch(createTodoList(userId, firstTodo));
+    } else {
+
+    }
+    this.setState({ newTodo: ''})
+  }
+
   render() {
     let { username } = this.props;
+    let { newTodo } = this.state;
     return (
       <div>
         <Header as="h2">{username}</Header>
-        <Form>
+        <Form onSubmit={this.handleTodoSubmit}>
           <Form.Input
-
+            id = 'newTodo'
+            value = { newTodo }
+            onChange = { this.handleTodoChange }
+            required
           />
-        <Button>Add A Todo</Button>
+        <Button className="ui primary button">Add A Todo</Button>
         </Form>
         <List>
           { this.displayTodo() }
@@ -57,7 +77,7 @@ class TodoList extends Component {
 const mapStateToProps = (state) => {
   return {
     ...state.user,
-    todolist: state.todo,
+    todolist: state.todo || [],
   }
 }
 
