@@ -22,17 +22,30 @@ router.post('/', (req,res) => {
 });
 
 router.put('/', (req, res) => {
-  let { userId, newTodo } = req.body;
-  TodoList.findOneAndUpdate(
-    { userId: userId },
-    { $push: { userTodos: newTodo }},
-    { new: true },
-    (err, todolist) => {
-      if(err)
-        return res.json(err)
-      return res.json(todolist)
-    }
-  )
+  let { userId, type } = req.body;
+  if(type === 'ADD') {
+    TodoList.findOneAndUpdate(
+      { userId: userId },
+      { $push: { userTodos: req.body.todoItem }},
+      { new: true },
+      (err, todolist) => {
+        if(err)
+          return res.json(err)
+        return res.json(todolist)
+      }
+    )
+  } else if (type === 'DELETE') {
+    TodoList.findOneAndUpdate(
+      { userId: userId },
+      { $set: { userTodos: req.body.filteredList }},
+      { new: true },
+      (err, todolist) => {
+        if(err)
+          return res.json(err)
+        return res.json(todolist)
+      }
+    )
+  }
 });
 
 

@@ -25,7 +25,7 @@ export const createTodoList = (userId, firstTodo) => {
   }
 }
 
-export const addTodoItem = (userId, newTodo) => {
+export const addTodoItem = (userId, todoItem) => {
   return(dispatch) => {
     fetch(`/api/todolists`, {
       method: 'PUT',
@@ -33,12 +33,25 @@ export const addTodoItem = (userId, newTodo) => {
         'ACCEPT': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ userId, newTodo })
+      body: JSON.stringify({ userId, todoItem, type: 'ADD' })
     }).then( res => res.json() )
-      .then( () => dispatch({ type: 'ADD_TODO', newTodo }))
+      .then( () => dispatch({ type: 'ADD_TODO', todoItem }))
   }
 }
 
+export const deleteTodoItem = (userId, filteredList, itemToDelete) => {
+  return(dispatch) => {
+    fetch('/api/todolists', {
+      method: 'PUT',
+      headers:{
+        'ACCEPT': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, filteredList, type: 'DELETE' })
+    }).then( res => res.json() )
+      .then( () => dispatch({ type: 'DELETE_TODO', itemToDelete}) )
+  }
+}
 
 export const newUserList = (userId) => {
   return(dispatch) => {

@@ -5,7 +5,9 @@ const todo = (state = [], action) => {
         return action.todolist.userTodos
       return []
     case 'ADD_TODO':
-      return [ ...state, action.newTodo ]
+      return [ ...state, action.todoItem ]
+    case 'DELETE_TODO':
+      return state.filter( todo => todo !== action.itemToDelete )
     default:
       return state;
   }

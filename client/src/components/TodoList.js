@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {
   getUserTodos,
   createTodoList,
-  addTodoItem
+  addTodoItem,
+  deleteTodoItem,
 } from '../actions/todo';
 import {
   List,
@@ -31,10 +32,18 @@ class TodoList extends Component {
             corner
             color="red"
             name="remove"
+            onClick={ () => this.handleDelete(todo) }
           />
         </List.Content>
       )
     })
+  }
+
+  handleDelete = (itemToDelete) => {
+    let { todolist } = this.props;
+    let userId = this.props._id;
+    let filteredList = todolist.filter( item => item !== itemToDelete);
+    this.props.dispatch(deleteTodoItem(userId, filteredList, itemToDelete));
   }
 
   handleTodoChange = (e) => {
