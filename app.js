@@ -14,6 +14,9 @@ const app = express();
 //Auth Controller
 const auth = require('./routes/auth');
 
+// todo list
+const todolists = require('./routes/todolists');
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +45,8 @@ passport.deserializeUser(User.deserializeUser());
 //Auth route
 app.use('/api/auth', auth);
 
+// todolist route
+app.use('/api/todolists', todolists);
 
 app.get('*', (request, response) => {
    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
