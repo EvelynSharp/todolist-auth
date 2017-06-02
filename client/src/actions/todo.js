@@ -25,6 +25,20 @@ export const createTodoList = (userId, firstTodo) => {
   }
 }
 
+export const addTodoItem = (userId, newTodo) => {
+  return(dispatch) => {
+    fetch(`/api/todolists`, {
+      method: 'PUT',
+      headers:{
+        'ACCEPT': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, newTodo })
+    }).then( res => res.json() )
+      .then( () => dispatch({ type: 'ADD_TODO', newTodo }))
+  }
+}
+
 
 export const newUserList = (userId) => {
   return(dispatch) => {

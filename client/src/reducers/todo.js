@@ -4,8 +4,8 @@ const todo = (state = [], action) => {
       if(action.todolist)
         return action.todolist.userTodos
       return []
-    // case 'ADD_TODOLIST':
-    //   return [ action.newTodo ]
+    case 'ADD_TODO':
+      return [ ...state, action.newTodo ]
     default:
       return state;
   }

@@ -21,4 +21,19 @@ router.post('/', (req,res) => {
   });
 });
 
+router.put('/', (req, res) => {
+  let { userId, newTodo } = req.body;
+  TodoList.findOneAndUpdate(
+    { userId: userId },
+    { $push: { userTodos: newTodo }},
+    { new: true },
+    (err, todolist) => {
+      if(err)
+        return res.json(err)
+      return res.json(todolist)
+    }
+  )
+});
+
+
 module.exports = router;

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUserTodos, createTodoList } from '../actions/todo';
+import {
+  getUserTodos,
+  createTodoList,
+  addTodoItem
+} from '../actions/todo';
 import {
   List,
   Icon,
@@ -40,12 +44,12 @@ class TodoList extends Component {
 
   handleTodoSubmit = (e) => {
     e.preventDefault();
-    let firstTodo = this.state.newTodo;
+    let newTodo = this.state.newTodo;
     let userId = this.props._id;
     if (!this.props.todolist[0]){
-      this.props.dispatch(createTodoList(userId, firstTodo));
+      this.props.dispatch(createTodoList(userId, newTodo));
     } else {
-
+      this.props.dispatch(addTodoItem(userId, newTodo))
     }
     this.setState({ newTodo: ''})
   }
