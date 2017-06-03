@@ -11,19 +11,19 @@ export const getUserTodos = (userId) => {
   }
 }
 
-export const createTodoList = (userId, firstTodo) => {
-  return(dispatch) => {
-    fetch('/api/todolists', {
-      method: 'POST',
-      headers: {
-        'ACCEPT': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ userId, firstTodo})
-    }).then( res => res.json() )
-      .then( todolist => dispatch({ type: 'GET_TODOS', todolist}))
-  }
-}
+// export const createTodoList = (userId, firstTodo) => {
+//   return(dispatch) => {
+//     fetch('/api/todolists', {
+//       method: 'POST',
+//       headers: {
+//         'ACCEPT': 'application/json',
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ userId, firstTodo})
+//     }).then( res => res.json() )
+//       .then( todolist => dispatch({ type: 'GET_TODOS', todolist}))
+//   }
+// }
 
 export const addTodoItem = (userId, todoItem) => {
   return(dispatch) => {
@@ -50,11 +50,5 @@ export const deleteTodoItem = (userId, filteredList, itemToDelete) => {
       body: JSON.stringify({ userId, filteredList, type: 'DELETE' })
     }).then( res => res.json() )
       .then( () => dispatch({ type: 'DELETE_TODO', itemToDelete}) )
-  }
-}
-
-export const newUserList = (userId) => {
-  return(dispatch) => {
-
   }
 }

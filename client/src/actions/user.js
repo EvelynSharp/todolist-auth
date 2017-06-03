@@ -11,6 +11,16 @@ export const logout = () => {
   }
 }
 
+const createTodoList = (userId) => {
+  fetch('/api/todolists', {
+    method: 'POST',
+    headers: {
+      'ACCEPT': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId })
+  }).then( res => res.json() )
+}
 
 export const authenticate = (email, password, title, history) => {
   return (dispatch) => {
@@ -25,9 +35,10 @@ export const authenticate = (email, password, title, history) => {
       body: JSON.stringify({ email, password })
    }).then( res => res.json() )
      .then( user => {
-       dispatch(currentUser(user))
-       history.push('/todolist')
-     })
+       dispatch(currentUser(user));
+       createTodoList(user._id);
+       history.push('/todolist');
+    })
   }
 }
 

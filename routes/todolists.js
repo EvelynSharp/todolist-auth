@@ -10,10 +10,10 @@ router.get('/', (req, res) => {
 
 
 router.post('/', (req,res) => {
-  let { userId, firstTodo } = req.body;
+  let { userId } = req.body;
   new TodoList ({
     userId,
-    userTodos: [firstTodo]
+    userTodos: []
   }).save( (err, todolist) => {
     if (err)
       return res.json(err);
